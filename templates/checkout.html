@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block title %}Checkout-GetResume{% endblock %}
+{% block img %}60111.jpg{% endblock img %} 
+{% block css %}
+<style>
+    body {
+        background: url('/media/pexels-karolina-grabowska-5632346.jpg') no-repeat center center/cover;
+        opacity: .8;
+    }
+    input{
+        font-weight: bold !important;
+    }
+    
+
+    
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<!-- <h3>this is checkout page</h3> -->
+<div class="container my-4">
+    <div class="col">
+        <h2 class="my-4">Step 1- GetResume Checkout-Review Your Template's</h2>
+        <div class="mb-4">
+            <ol class="list-group list-group-numbered" id="items">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">{{template.title}}</div>
+                    </div>
+                    <span class="badge bg-primary rounded-pill"> &#8377; {{template.price}}</span>
+                </li>
+
+            </ol>
+        </div>
+    </div>
+
+
+
+    <h2 class="my-4">Step 2- Enter Your Contact and other details</h2>
+    <div class="container ">
+
+        <div class="">
+
+
+            <div class="card " style="border-radius: 15px;">
+                <form action="/checkout/{{template.sno}}" method="post">{% csrf_token %}
+                    <input type="hidden" name="amount" value="{{template.price}}">
+                    <div class="card-body">
+
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+
+                                <h6 class="mb-0">Full name</h6>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" name="name" class="form-control form-control-lg" required />
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <h6 class="mb-0">Email address</h6>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="email" name="email" class="form-control form-control-lg"
+                                    placeholder="example@example.com" required />
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <h6 class="mb-0">Phone</h6>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="tel" name="phone" class="form-control-lg" maxlength="13" placeholder=""
+                                    required></input>
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+
+                        
+                        {% if not request.user.is_authenticated %}
+
+                        <h6 style="color: red;">Login Or Singup to proceed next</h6>
+                        {% endif %}
+
+
+                        <div class="px-5 py-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Next</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

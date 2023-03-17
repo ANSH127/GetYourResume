@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Payment-GetResume{% endblock %}
+{% block img %}60111.jpg{% endblock img %} 
+{% block css %}
+<style>
+    body {
+        background: url('/media/pexels-ivan-samkov-7621140.jpg') no-repeat center center/cover;
+        opacity: .9;
+    }
+    
+    
+
+    
+</style>
+{% endblock css %}
+
+{% block body %}
+
+
+
+
+    <div class="text-center my-5">
+        <h2 class="my-4">Scan QR</h2>
+        <a href="upi://pay?pa=arpit2004soni@oksbi&pn=Arpit%20soni&am={{price}}.00&cu=INR&aid=uGICAgMDYtNGzQA"><img src="/media/qr_code.jpg" alt="" width="250px" height="250px"></a>
+        <h3 class="mt-4">&#8377; 50</h3>
+        <form action="/check/{{id}}" method="post" enctype='multipart/form-data'>{% csrf_token %}
+        <div style="width: 50%; left: 25%; position: relative;">
+            <label class="form-label" for="img"><b>Upload Payment Proof</b></label>
+            <input multiple type="file" id="img" name="img" class="form-control form-control-lg" required />
+        </div>
+        <button class="btn btn-danger btn-lg mt-4" type="submit">Submit</button>
+    </form>
+
+
+
+
+    </div>
+
+
+
+{% endblock %}

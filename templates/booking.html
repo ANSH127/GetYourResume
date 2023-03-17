@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Mybookings-GetResume{% endblock title %}
+{% block img %}60111.jpg{% endblock img %} 
+
+{% block css %}
+
+<style>
+    
+
+    body {
+        background-color: aliceblue;
+    }
+    @media only screen and (max-width: 1170px) {
+        
+    h5{
+        font-size: 10px;
+    }
+    
+  }
+</style>
+
+{% endblock css %}
+{% block body %}
+
+<div class="container mt-3">
+    {% for item in obj  %}
+    <div class="card my-2">
+        <div class="card-body" style="background-color: cadetblue; color: azure; font-weight: bold;">
+
+            <div class="row">
+                {% comment %} <div class="col-2">
+                    {{item.bookinginfo.flight_d_date}}
+                </div> {% endcomment %}
+                <div class="col-3 ">
+                    {% if  item.status%}
+                    <h5><span class="badge text-bg-success">CONFIRMED</span></h5>
+                    {% else %}
+                    <h5><span class="badge text-bg-danger">PENDING</span></h5>
+
+                    
+                    {% endif %}
+                    <p>Booked On: {{item.b_date}} </p>
+
+                </div>
+                
+                <div class="col-3">
+                    {{item.info.r_details.title}}
+                    <p>{{item.info.r_details.desc|slice:50}}..</p>
+                </div>
+                <div class="col">Booking refrence no
+                    <p>{{item.sno}}</p>
+                </div>
+                <div class="col-3 ">
+                    {% if item.file%}
+                    <h5><span class="badge text-bg-success">Available</span></h5>
+                    {% else %}
+                    <h5><span class="badge text-bg-danger">Not Available</span></h5>
+
+                    
+                    {% endif %}
+                    <p>Expected On: {{item.d_date}} </p>
+
+                </div>
+                <div class="col">
+                    {% if item.file%}
+
+                    <a href="/media/{{item.file}}/" target="_blank" class="btn btn-outline-info btn-sm my-1" type="submit">Download Resume</a>
+                    {% else %}
+                    <button class="btn btn-outline-info btn-sm my-1" type="submit">Download Resume</button>
+                    {% endif %}
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+
+{% endblock body %}

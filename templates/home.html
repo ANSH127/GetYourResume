@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title%} GetResume{% endblock %}
+{% block img %}{% if profile %}{{profile}} {% else %}60111.jpg{% endif %}{% endblock img %} 
+
+{% load humanize %}
+
+{% block css %}
+<style>
+    body {
+        background: url('/media/pexels-faik-akmd-1025469.jpg') no-repeat center center/cover;
+    }
+    
+
+    .mycard:hover{
+        transform: scale(1.04);
+        transition-delay:.4s;
+        transition-timing-function: ease-in;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+
+
+<div class="container">
+    <h1 class="text-center my-4"><span id="typed" style="color: aqua;"></span> </h1>
+    <div class="row">
+        {% for item in resume %}
+        <div class="card mx-3 mb-2 mycard"
+            style="width: 340px; height: auto; display: grid; margin: auto !important; margin-bottom: 20px !important;">
+
+            <img src="/media/{{item.image}}" class="card-img-top " alt="Palm Springs Road" height="350px" />
+            <div class="card-body ">
+                <h4 class="card-title">{{item.title}}</h4>
+                <h5 class="card-title"> &#8377; {{item.price}}</h5>
+                <p class="card-text">{{item.desc}}</p>
+            </div>
+            <span>
+                <a class="btn btn-danger my-2 mx-2" href="templateview/{{item.sno}}">Quick View</a>
+                <a class="btn btn-danger my-2" href="checkout/{{item.sno}}">Checkout</a>
+
+            </span>
+            <div class="card-footer text-center">
+                <small class="text-muted">{{item.timeStamp | naturaltime}}</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+    var typed = new Typed('#typed', {
+        strings: ["Choose your templates"],
+        backSpeed: 15,
+        smartBackspace: true,
+        backDelay: 1200,
+        startDelay: 1000,
+        typeSpeed: 25,
+        loop: true,
+        showCursor: true,
+
+    });
+
+</script>
+{% endblock js %}

@@ -1,0 +1,519 @@
+{% extends 'base.html' %}
+{% block title%} Login-FindPG {% endblock %}
+
+
+{% block css %}
+<style>
+    textarea {
+        border-radius: 10px;
+        font-weight: bold !important;
+    }
+
+    body {
+        background: url('/media/pexels-ketut-subiyanto-4560150.jpg') center center/cover;
+        /* height: 100%;
+        width: 100vw; */
+        opacity: .9;
+        top: 0;
+        left: 0;
+
+    }
+
+    input {
+        font-weight: bold !important;
+    }
+
+    input::placeholder {
+        color: gray !important;
+    }
+
+    .overlay {
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        right: 0;
+        background-color: #eee6d9;
+        overflow: hidden;
+        width: 100%;
+        border-radius: 10px;
+        height: 0;
+        transition: .5s ease;
+        opacity: 0;
+    }
+
+    .box:hover .overlay {
+        bottom: 0;
+        height: 100%;
+        opacity: 0.8;
+    }
+
+    .box {
+        position: relative;
+        width: 200px;
+    }
+
+    .btn2 {
+        /* position: absolute; */
+        padding: 11px 15px;
+        border: 1px solid red;
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        /* margin-top: -10000px; */
+        margin: 6px;
+        /* margin-right: 400px; */
+        font-size: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .btn2:hover {
+        border: 2px solid red;
+        /* border-bottom:4px solid red; */
+        transition: .2s ease-in-out;
+    }
+
+    .text {
+        white-space: nowrap;
+        color: white;
+        font-size: 20px;
+        position: absolute;
+        /* font-weight: bold; */
+        overflow: hidden;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+</style>
+
+{% endblock css %}
+
+{% block body %}
+
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration mb-4" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Resume</h3>
+                        <form action="/profile/" method="post" enctype='multipart/form-data'>{% csrf_token %}
+                            <div class="box my-4">
+                                {% if info.img|length > 2 %}
+                                <img src="/media/{{info.img}}" class="rounded-3" style="width: 200px; height: 200px;"
+                                    alt="Avatar" />
+                                {% else %}
+                                <img src="/media/resume/profile/404img.png" class="rounded-3"
+                                    style="width: 200px; height: 200px;" alt="Avatar" />
+                                {% endif %}
+
+                                <div class="overlay">
+                                    <div class="text">
+                                        <!-- <input type="file" class="btn btn-primary" value="edit"/> -->
+                                        <label for="img" class="btn btn-primary">Edit</label>
+                                        <input type="file" id="img" name="img" style="display:none">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        {% if info.fname|length >= 2 %}
+                                        <input type="text" id="firstName" class="form-control form-control-lg"
+                                            name="fname" value="{{info.fname}}" />
+
+                                        {% else %}
+                                        <input type="text" id="firstName" class="form-control form-control-lg"
+                                            name="fname" placeholder="Rahul" required />
+                                        {% endif %}
+                                        <label class="form-label" for="firstName">First Name</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        {% if info.lname|length >= 2 %}
+                                        <input type="text" id="lastName" class="form-control form-control-lg"
+                                            name="lname" value="{{info.lname}}" />
+
+                                        {% else %}
+                                        <input type="text" id="lastName" class="form-control form-control-lg"
+                                            name="lname" placeholder="Goyal" required />
+
+                                        {% endif %}
+                                        <label class="form-label" for="lastName">Last Name</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.city|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg" id="city" name="city"
+                                            value="{{info.city}}" />
+
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" id="city" name="city"
+                                            placeholder="Jalandhar" required />
+                                        {% endif %}
+                                        <label for="city" class="form-label">City</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <h6 class="mb-2 pb-1">Gender: </h6>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radiobtn" id="maleGender"
+                                            value="Male" checked />
+                                        <label class="form-check-label" for="maleGender">Male</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radiobtn" id="femaleGender"
+                                            value="Female" />
+                                        <label class="form-check-label" for="femaleGender">Female</label>
+                                    </div>
+
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radiobtn" id="otherGender"
+                                            value="Other" />
+                                        <label class="form-check-label" for="otherGender">Other</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="form-outline">
+                                        {% if info.email|length >= 2 %}
+
+                                        <input type="email" id="emailAddress" class="form-control form-control-lg"
+                                            name="email" value="{{info.email}}" />
+                                        {% else %}
+
+                                        <input type="email" id="emailAddress" class="form-control form-control-lg"
+                                            name="email" placeholder="xyz@gmail.com" required />
+                                        {% endif %}
+                                        <label class="form-label" for="emailAddress">Email</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="form-outline">
+                                        {% if info.phone|length >= 2 %}
+                                        <input type="tel" id="phoneNumber" value="{{info.phone}}" name="phone"
+                                            class="form-control form-control-lg" />
+                                        {% else %}
+                                        <input type="tel" id="phoneNumber" placeholder="91XXXXXXXX" name="phone"
+                                            class="form-control form-control-lg" required />
+                                        {% endif %}
+                                        <label class="form-label" for="phoneNumber">Phone Number</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.github_link|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg"
+                                            value="{{info.github_link}}" name="glink" id="github" />
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" name="glink" id="github"
+                                            required />
+                                        {% endif %}
+
+                                        <label for="github" class="form-label">Github Link</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.linkedin_link|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg" name="llink"
+                                            value="{{info.linkedin_link}}" id="linkedin" />
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" name="llink"
+                                            id="linkedin" required />
+                                        {% endif %}
+
+                                        <label for="linkedin" class="form-label">Linkedin Link</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="form-outline datepicker w-100">
+                                    {% if info.college|length >= 2 %}
+                                    <input type="text" class="form-control form-control-lg" id="clg" name="clg"
+                                        value="{{info.college}}" />
+                                    {% else %}
+                                    <input type="text" class="form-control form-control-lg" id="clg" name="clg"
+                                        placeholder="Delhi University" required />
+                                    {% endif %}
+
+                                    <label for="clg" class="form-label">Collage</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.s_year|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg" name="syear"
+                                            value="{{info.s_year}}" id="syear" minlength="4" maxlength="4" required />
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" name="syear" id="syear"
+                                            required minlength="4" maxlength="4" />
+                                        {% endif %}
+
+                                        <label for="syear" class="form-label">Start Year</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.e_year|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg" value="{{info.e_year}}"
+                                            name="eyear" id="eyear" minlength="4" maxlength="4" required />
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" name="eyear" id="eyear"
+                                            minlength="4" maxlength="4" required />
+                                        {% endif %}
+
+                                        <label for="eyear" class="form-label">Expected End Year </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.degree|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg" id="degree"
+                                            name="degree" value="{{info.degree}}" required />
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" id="degree"
+                                            name="degree" placeholder="BTech" required />
+                                        {% endif %}
+
+                                        <label for="degree" class="form-label">Degree</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.stream|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg" id="stream"
+                                            name="stream" value="{{info.stream}}" required />
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" id="stream"
+                                            name="stream" placeholder="Computer Science & Engineering" required />
+                                        {% endif %}
+
+
+                                        <label for="stream" class="form-label">Stream</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.tenth_age|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg" name="10th"
+                                            value="{{info.tenth_age}}" id="10th" required />
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" name="10th" id="10th"
+                                            required />
+                                        {% endif %}
+                                        <label for="10th" class="form-label">10th %age</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        {% if info.twelth_age|length >= 2 %}
+                                        <input type="text" class="form-control form-control-lg" name="12th"
+                                            value="{{info.twelth_age}}" id="12th" required />
+                                        {% else %}
+                                        <input type="text" class="form-control form-control-lg" name="12th" id="12th"
+                                            required />
+                                        {% endif %}
+
+                                        <label for="12th" class="form-label">12th %age</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="form-outline datepicker w-100">
+                                    {% if info.about|length >= 2 %}
+                                    <textarea name="intro" id="intro" cols="30" rows="10"
+                                        style="width: 100%; height: 150px;" required>{{info.about}}</textarea>
+                                    {% else %}
+                                    <textarea name="intro" id="intro" cols="30" rows="10"
+                                        style="width: 100%; height: 150px;" required></textarea>
+                                    {% endif %}
+
+                                    <!-- <input type="text" class="form-control form-control-lg" id="birthdayDate" /> -->
+                                    <label for="intro" class="form-label">About Yourself</label>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-outline datepicker w-100">
+                                    {% if info.skills|length >= 2 %}
+                                    <textarea name="skills" id="skills" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required>{{info.skills}}</textarea>
+                                    {% else %}
+                                    <textarea name="skills" id="skills" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required></textarea>
+                                    {% endif %}
+
+                                    <!-- <input type="text" class="form-control form-control-lg" id="birthdayDate" /> -->
+
+                                    <label for="skills" class="form-label">Skills</label>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-outline datepicker w-100">
+                                    {% if info.achievement|length >= 2 %}
+                                    <textarea name="Achievement" id="Achievement" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required>{{info.achievement}}</textarea>
+                                    {% else %}
+                                    <textarea name="Achievement" id="Achievement" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required></textarea>
+                                    {% endif %}
+
+                                    <!-- <input type="text" class="form-control form-control-lg" id="birthdayDate" /> -->
+
+                                    <label for="Achievement" class="form-label">Achievement's</label>
+                                </div>
+                            </div>
+                            <div class="row">
+
+
+                                <div class="form-outline datepicker w-100">
+                                    {% if info.projects|length >= 2 %}
+                                    <textarea name="project" id="project" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required>{{info.projects}}</textarea>
+                                    {% else %}
+                                    <textarea name="project" id="project" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required></textarea>
+                                    {% endif %}
+
+                                    <!-- <input type="text" class="form-control form-control-lg" id="birthdayDate" /> -->
+
+                                    <label for="project" class="form-label">Projects</label>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-outline datepicker w-100">
+                                    {% if info.exprience|length >= 2 %}
+                                    <textarea name="Experience" id="Experience" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required>{{info.exprience}}</textarea>
+                                    {% else %}
+                                    <textarea name="Experience" id="Experience" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required></textarea>
+                                    {% endif %}
+
+
+                                    <!-- <input type="text" class="form-control form-control-lg" id="birthdayDate" /> -->
+                                    <label for="Experience" class="form-label">Experience</label>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-outline datepicker w-100">
+                                    {% if info.hobbies|length >= 2 %}
+                                    <textarea name="other_Intrests" id="other_Intrests" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required>{{info.hobbies}}</textarea>
+                                    {% else %}
+                                    <textarea name="other_Intrests" id="other_Intrests" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;" required></textarea>
+                                    {% endif %}
+
+
+                                    <!-- <input type="text" class="form-control form-control-lg" id="birthdayDate" /> -->
+                                    <label for="other_Intrests" class="form-label">Other Intrests</label>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-outline datepicker w-100">
+                                    {% if info.other|length >= 2 %}
+                                    <textarea name="other" id="other" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;">{{info.other}}</textarea>
+                                    {% else %}
+                                    <textarea name="other" id="other" cols="30" rows="10"
+                                        style="width: 100%; height: 100px;"></textarea>
+                                    {% endif %}
+
+
+                                    <!-- <input type="text" class="form-control form-control-lg" id="birthdayDate" /> -->
+                                    <label for="other" class="form-label">Other(Optional)</label>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Save & Update" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock body %}
+{% block js %}
+<script>
+    var uploadField = document.getElementById("img");
+
+    uploadField.onchange = function () {
+        if (this.files[0].size > 2097152) {
+            alert("File is too big! Max size 2MB");
+            this.value = "";
+        };
+    };
+</script>
+{% endblock js %}
